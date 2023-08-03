@@ -1682,6 +1682,14 @@ with pkgs;
 
   etlegacy = callPackage ../games/etlegacy { lua = lua5_4; };
 
+  fastfetch = darwin.apple_sdk_11_0.callPackage ../tools/misc/fastfetch {
+    inherit (darwin.apple_sdk_11_0.frameworks)
+    AppKit Cocoa CoreDisplay CoreVideo CoreWLAN DisplayServices
+    Foundation IOBluetooth MediaRemote OpenCL;
+
+    inherit (darwin) moltenvk;
+  };
+
   fscan = callPackage ../tools/security/fscan { };
 
   copier = callPackage ../tools/misc/copier { };
@@ -5956,7 +5964,7 @@ with pkgs;
   online-judge-tools = with python3.pkgs; toPythonApplication online-judge-tools;
 
   onnxruntime = callPackage ../development/libraries/onnxruntime {
-    protobuf = protobuf3_19;
+    inherit (darwin.apple_sdk.frameworks) Foundation;
   };
 
   xkbd = callPackage ../applications/misc/xkbd { };
@@ -28991,6 +28999,9 @@ with pkgs;
 
   fira-code = callPackage ../data/fonts/fira-code { };
   fira-code-symbols = callPackage ../data/fonts/fira-code/symbols.nix { };
+  fira-code-nerdfont = nerdfonts.override {
+    fonts = [ "FiraCode" ];
+  };
 
   fira-go = callPackage ../data/fonts/fira-go { };
 
@@ -31405,6 +31416,7 @@ with pkgs;
   };
 
   goldendict = libsForQt5.callPackage ../applications/misc/goldendict { };
+  goldendict-ng = qt6Packages.callPackage ../applications/misc/goldendict-ng { };
 
   gomuks = callPackage ../applications/networking/instant-messengers/gomuks { };
 
@@ -33678,6 +33690,8 @@ with pkgs;
   ns-usbloader = callPackage ../applications/misc/ns-usbloader { };
 
   nwg-bar = callPackage ../applications/misc/nwg-bar { };
+
+  nwg-displays = callPackage ../applications/misc/nwg-displays { };
 
   nwg-dock = callPackage ../applications/misc/nwg-dock { };
 
@@ -40078,6 +40092,8 @@ with pkgs;
   openzwave = callPackage ../development/libraries/openzwave { };
 
   mongoc = darwin.apple_sdk_11_0.callPackage ../development/libraries/mongoc { };
+
+  mongocxx = callPackage ../development/libraries/mongocxx/default.nix { };
 
   mongoose = callPackage ../development/libraries/science/math/mongoose { };
 
